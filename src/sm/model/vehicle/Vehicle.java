@@ -2,13 +2,13 @@ package sm.model.vehicle;
 
 import java.util.List;
 import java.util.ArrayList;
-import sm.model.cargo.CargoItem;
+import sm.model.cargo.ICargo;
 
 public abstract class Vehicle{
     private String id;
     private double maxCapacityKg;
     private double currentLoadKg;
-    private List<CargoItem> cargoList = new ArrayList<>();
+    private List<ICargo> cargoList = new ArrayList<>();
 
     public Vehicle (String id, double maxCapacityKg){
         this.id=id;
@@ -33,7 +33,7 @@ public abstract class Vehicle{
         }
     }
 
-    public void load(CargoItem item){
+    public void load(ICargo item){
         if (currentLoadKg + item.getWeight() <= maxCapacityKg){
             currentLoadKg += item.getWeight();
             cargoList.add(item);
@@ -43,8 +43,8 @@ public abstract class Vehicle{
         }
     }
 
-    public void load(List<CargoItem> items){
-        for (CargoItem item : items){
+    public void load(List<ICargo> items){
+        for (ICargo item : items){
             load(item);
         }
     }

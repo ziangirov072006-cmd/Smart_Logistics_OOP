@@ -1,7 +1,12 @@
 package sm.model.vehicle;
 
-public class Drone extends Vehicle {
+import sm.interfaces.ITrackable;
+
+public class Drone extends Vehicle implements ITrackable {
     private double batteryLevel;
+    private double latitude = 35.75;
+    private double longitude = 27.65;
+    private double altitude = 100;
 
     public Drone (String id, double batteryLevel){
         super(id, 5);
@@ -15,11 +20,24 @@ public class Drone extends Vehicle {
 
     @Override
     public void move(){
-        batteryLevel-=5;
         if (batteryLevel < 0){
             throw new IllegalArgumentException("О нет, мой дрон, все пропало.\nЗаряд на нуле :(");
         }
+        batteryLevel -= 5;
+        latitude += 0.01;
+        longitude += 0.01;
+        altitude += 0.05;
         System.out.println("Дрон " + getId() + " летит по воздуху, заряд батареи: " + batteryLevel + "%");
+    }
+
+    @Override 
+    public String getCurrentCoordinates() {
+        return "Широта: " + latitude + ", Долгота: " + longitude + ", Высота полета: " + altitude;
+    }
+
+    @Override 
+    public void sendStatusUpdate(){
+        System.out.println("Дрон " + getId() + ": статус отправлен, координаты: " + getCurrentCoordinates());
     }
 
 }
