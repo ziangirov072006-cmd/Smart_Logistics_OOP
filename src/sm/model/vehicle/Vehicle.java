@@ -1,9 +1,14 @@
-package model;
+package sm.model.vehicle;
+
+import java.util.List;
+import java.util.ArrayList;
+import sm.model.cargo.CargoItem;
 
 public abstract class Vehicle{
     private String id;
     private double maxCapacityKg;
     private double currentLoadKg;
+    private List<CargoItem> cargoList = new ArrayList<>();
 
     public Vehicle (String id, double maxCapacityKg){
         this.id=id;
@@ -25,6 +30,22 @@ public abstract class Vehicle{
         }
         else{
             System.out.println("Превышен лимит нагрузки " + id);
+        }
+    }
+
+    public void load(CargoItem item){
+        if (currentLoadKg + item.getWeight() <= maxCapacityKg){
+            currentLoadKg += item.getWeight();
+            cargoList.add(item);
+        }
+        else{
+            System.out.println("Превышен лимит нагрузки "+ id);
+        }
+    }
+
+    public void load(List<CargoItem> items){
+        for (CargoItem item : items){
+            load(item);
         }
     }
 }
